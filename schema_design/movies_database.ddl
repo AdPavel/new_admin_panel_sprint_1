@@ -1,5 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS content;
 
+
 CREATE TABLE IF NOT EXISTS content.film_work (
     id uuid PRIMARY KEY,
     title TEXT NOT NULL,
@@ -44,3 +45,11 @@ CREATE TABLE IF NOT EXISTS content.person_film_work (
     role VARCHAR(30),
     created TIMESTAMP WITH TIME ZONE
 );
+
+-- Создание индексов
+
+CREATE INDEX film_work_creation_date_rating_idx ON content.film_work(creation_date, rating);
+CREATE INDEX film_work_type_creation_date_idx ON content.film_work(type, creation_date);
+
+CREATE UNIQUE INDEX film_work_person_idx ON content.person_film_work (film_work_id, person_id);
+CREATE INDEX ON content.genre_film_work (film_work_id, genre_id);

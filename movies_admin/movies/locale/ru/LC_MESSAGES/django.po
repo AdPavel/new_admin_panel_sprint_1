@@ -1229,11 +1229,11 @@ msgstr "Полное имя"
 
 #: movies/models.py:48
 msgid "Person"
-msgstr "Линость"
+msgstr "Личность"
 
 #: movies/models.py:49
 msgid "Persons"
-msgstr "Линости"
+msgstr "Личности"
 
 #: movies/models.py:56
 msgid "title"

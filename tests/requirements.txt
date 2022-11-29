@@ -1,0 +1,8 @@
+flake8==4.0  # Разумеется, вам потребуется линтер :)
+flake8-bandit==2.1.2
+bandit==1.7.2
+python-dotenv==0.21.0
+psycopg2==2.9.5
+pytest==7.2.0
+maya==0.6.1
+

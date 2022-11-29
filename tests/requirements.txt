@@ -1,6 +1,6 @@
-flake8==4.0  # Разумеется, вам потребуется линтер :)
-flake8-bandit==2.1.2
-bandit==1.7.2
+flake8==4.0.0  # Разумеется, вам потребуется линтер :)
+flake8-bandit==4.1.1
+bandit==1.7.4
 python-dotenv==0.21.0
 psycopg2==2.9.5
 pytest==7.2.0

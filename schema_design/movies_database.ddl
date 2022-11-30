@@ -89,4 +89,3 @@ alter table content.person_film_work owner to app;
 
 create unique index if not exists film_work_person_idx
 	on content.person_film_work (film_work_id, person_id, role);
-

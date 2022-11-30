@@ -1,26 +1,22 @@
 import sqlite3
 import psycopg2
-import os
 import pytest
 import maya
 
 from psycopg2.extras import DictCursor
-from dotenv import load_dotenv
-
-load_dotenv()
-DB_NAME = os.environ.get('DB_NAME')
-DB_USER = os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-DB_PATH = os.environ.get('DB_PATH')
-HOST = os.environ.get('HOST')
-PORT = os.environ.get('PORT')
+from config import settings
 
 
 @pytest.fixture()
 def connection():
-    dsl = {'dbname': DB_NAME, 'user': DB_USER, 'password': DB_PASSWORD,
-           'host': HOST, 'port': PORT}
-    with sqlite3.connect(DB_PATH) as sqlite_conn, \
+    dsl = {
+        'dbname': settings.db_name,
+        'user': settings.db_user,
+        'password': settings.db_password,
+        'host': settings.host,
+        'port': settings.port
+    }
+    with sqlite3.connect(settings.db_path) as sqlite_conn, \
             psycopg2.connect(**dsl, cursor_factory=DictCursor) as pg_conn:
         return sqlite_conn.cursor(), pg_conn.cursor()
 

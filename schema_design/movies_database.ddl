@@ -6,10 +6,12 @@ create table if not exists content.film_work
 	title text not null,
 	description text,
 	creation_date date,
-	rating double precision,
+	rating double precision default 0,
 	type text not null,
-	created timestamp with time zone,
-	modified timestamp with time zone
+	created timestamp with time zone default now(),
+	modified timestamp with time zone default now(),
+	file_path varchar(100),
+	certificate text
 );
 
 alter table content.film_work owner to app;
@@ -27,8 +29,8 @@ create table if not exists content.genre
 			primary key,
 	name varchar(30) not null,
 	description text,
-	created timestamp with time zone,
-	modified timestamp with time zone
+	created timestamp with time zone default now(),
+	modified timestamp with time zone default now()
 );
 
 alter table content.genre owner to app;
@@ -38,9 +40,9 @@ create table if not exists content.person
 	id uuid not null
 		constraint person_pkey
 			primary key,
-	full_name varchar(30) not null,
-	created timestamp with time zone,
-	modified timestamp with time zone
+	full_name varchar(50) not null,
+	created timestamp with time zone default now(),
+	modified timestamp with time zone default now()
 );
 
 alter table content.person owner to app;
@@ -50,15 +52,15 @@ create table if not exists content.genre_film_work
 	id uuid not null
 		constraint genre_film_work_pkey
 			primary key,
-	genre_id uuid
+	genre_id uuid not null
 		constraint genre_film_work_genre_id_fkey
 			references content.genre
 				on delete cascade,
-	film_work_id uuid
+	film_work_id uuid not null
 		constraint genre_film_work_film_work_id_fkey
 			references content.film_work
 				on delete cascade,
-	created timestamp with time zone
+	created timestamp with time zone default now()
 );
 
 alter table content.genre_film_work owner to app;
@@ -71,20 +73,20 @@ create table if not exists content.person_film_work
 	id uuid not null
 		constraint person_film_work_pkey
 			primary key,
-	person_id uuid
+	person_id uuid not null
 		constraint person_film_work_person_id_fkey
 			references content.person
 				on delete cascade,
-	film_work_id uuid
+	film_work_id uuid not null
 		constraint person_film_work_film_work_id_fkey
 			references content.film_work
 				on delete cascade,
-	role varchar(30),
-	created timestamp with time zone
+	role varchar(50) not null,
+	created timestamp with time zone default now()
 );
 
 alter table content.person_film_work owner to app;
 
 create unique index if not exists film_work_person_idx
-	on content.person_film_work (film_work_id, person_id);
+	on content.person_film_work (film_work_id, person_id, role);
 

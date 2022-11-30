@@ -51,7 +51,7 @@ class FilmWork:
 def save_to_genre(table_chunk):
     sql_query = """
         INSERT INTO content.genre(id, name, description, created, modified)
-        VALUES (%s, %s, %s, %s, %s) ON CONFLICT do nothing
+        VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING
         """
     data = [(row.id, row.name, row.description, row.created_at, row.updated_at)
             for row in table_chunk]
@@ -62,7 +62,7 @@ def save_to_genre_film_work(table_chunk):
     sql_query = """
         INSERT INTO content.genre_film_work(id, genre_id,
                                             film_work_id, created)
-        VALUES (%s, %s, %s, %s) ON CONFLICT do nothing
+        VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING
         """
     data = [(row.id, row.genre_id, row.film_work_id, row.created_at)
             for row in table_chunk]
@@ -73,7 +73,7 @@ def save_to_person_film_work(table_chunk):
     sql_query = """
         INSERT INTO content.person_film_work(id, person_id, film_work_id,
                                             role, created)
-        VALUES (%s, %s, %s, %s, %s) ON CONFLICT do nothing
+        VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING
         """
     data = [(row.id, row.person_id, row.film_work_id, row.role, row.created_at)
             for row in table_chunk]
@@ -83,7 +83,7 @@ def save_to_person_film_work(table_chunk):
 def save_to_person(table_chunk):
     sql_query = """
         INSERT INTO content.person(id, full_name, created, modified)
-        VALUES (%s, %s, %s, %s) ON CONFLICT do nothing
+        VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING
         """
     data = [(row.id, row.full_name, row.created_at, row.updated_at)
             for row in table_chunk]
@@ -94,7 +94,7 @@ def save_to_film_work(table_chunk):
     sql_query = """
         INSERT INTO content.film_work (id, title, description, creation_date,
          rating, type, created, modified, file_path)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT do nothing
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT DO NOTHING
         """
     data = [(row.id, row.title, row.description,
              row.creation_date, row.rating, row.type,

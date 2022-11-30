@@ -7,6 +7,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'movies.apps.MoviesConfig',  # ваше приложение'
     'debug_toolbar',
+    'django_admin_listfilter_dropdown',
+    'rangefilter',
 ]
 
 MIDDLEWARE = [

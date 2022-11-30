@@ -30,9 +30,9 @@ class UUIDMixin(models.Model):
 
 class Genre(UUIDMixin, TimeStampedMixin):
     # Первым аргументом обычно идёт человекочитаемое название поля.
-    name = models.CharField('name', max_length=30)
+    name = models.CharField(_('title'), max_length=30)
     # blank=True делает поле необязательным для заполнения.
-    description = models.TextField('description', blank=True)
+    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         # Ваши таблицы находятся в нестандартной схеме. Это нужно указать в классе модели.
@@ -64,12 +64,12 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
     rating = models.FloatField(_('rating'), blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     type = models.CharField(_('type'), max_length=255,
                             choices=[('movie', _('type movie')), ('tv_show', _('type TV show'))])
-    genres = models.ManyToManyField(Genre, through='GenreFilmwork')
-    persons = models.ManyToManyField(Person, through='PersonFilmwork')
-    certificate = models.CharField(_('certificate'), max_length=512, blank=True)
+    genres = models.ManyToManyField(Genre, through='GenreFilmwork', verbose_name=_('Film genre'))
+    persons = models.ManyToManyField(Person, through='PersonFilmwork', verbose_name=_('Person'))
     # Параметр upload_to указывает, в какой подпапке будут храниться загружемые файлы.
     # Базовая папка указана в файле настроек как MEDIA_ROOT
     file_path = models.FileField(_('file'), blank=True, null=True, upload_to='movies/')
+    certificate = models.CharField(_('certificate'), max_length=512, blank=True)
 
     class Meta:
         db_table = "content\".\"film_work"
@@ -81,8 +81,8 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
 
 
 class GenreFilmwork(UUIDMixin):
-    film_work = models.ForeignKey(Filmwork, on_delete=models.CASCADE)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    film_work = models.ForeignKey(Filmwork, on_delete=models.CASCADE, verbose_name=_('film_work'))
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, verbose_name=_('genre'))
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -95,8 +95,8 @@ class GenreFilmwork(UUIDMixin):
 
 
 class PersonFilmwork(UUIDMixin):
-    film_work = models.ForeignKey(Filmwork, on_delete=models.CASCADE)
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    film_work = models.ForeignKey(Filmwork, on_delete=models.CASCADE, verbose_name=_('film_work'))
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name=_('person'))
     role = models.CharField(_('role'), max_length=50, null=True)
     created = models.DateTimeField(auto_now_add=True)
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-23 16:03+0000\n"
+"POT-Creation-Date: 2022-11-30 10:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: venv/lib/python3.9/site-packages/admin_searchable_dropdown/templates/django-admin-autocomplete-filter/autocomplete-filter.html:3
+#: venv/lib/python3.9/site-packages/admin_searchable_dropdown/templates/django-admin-searchable-dropdown/autocomplete-filter.html:3
+#: venv/lib/python3.9/site-packages/django_admin_listfilter_dropdown/templates/django_admin_listfilter_dropdown/dropdown_filter.html:3
+#, python-format
+msgid " By %(filter_title)s "
+msgstr ""
 
 #: venv/lib/python3.9/site-packages/django/contrib/messages/apps.py:7
 msgid "Messages"
@@ -1213,60 +1220,68 @@ msgstr ""
 msgid "MOVIE"
 msgstr ""
 
-#: movies/models.py:36
-msgid "Genre"
-msgstr ""
-
-#: movies/models.py:37
-msgid "Genres"
-msgstr ""
-
-#: movies/models.py:44
-msgid "Full name"
-msgstr ""
-
-#: movies/models.py:48
-msgid "Person"
-msgstr ""
-
-#: movies/models.py:49
-msgid "Persons"
-msgstr ""
-
-#: movies/models.py:56
+#: movies/models.py:33 movies/models.py:61
 msgid "title"
 msgstr ""
 
-#: movies/models.py:57
+#: movies/models.py:35 movies/models.py:62
 msgid "description"
 msgstr ""
 
-#: movies/models.py:58
-msgid "create date"
+#: movies/models.py:41
+msgid "Genre"
 msgstr ""
 
-#: movies/models.py:59
-msgid "rating"
+#: movies/models.py:42
+msgid "Genres"
 msgstr ""
 
-#: movies/models.py:62
-msgid "type"
+#: movies/models.py:49
+msgid "Full name"
+msgstr ""
+
+#: movies/models.py:53
+msgid "Person"
+msgstr ""
+
+#: movies/models.py:54
+msgid "Persons"
 msgstr ""
 
 #: movies/models.py:63
-msgid "type movie"
+msgid "create date"
 msgstr ""
 
 #: movies/models.py:64
+msgid "rating"
+msgstr ""
+
+#: movies/models.py:65
+msgid "type"
+msgstr ""
+
+#: movies/models.py:66
+msgid "type movie"
+msgstr ""
+
+#: movies/models.py:66
 msgid "type TV show"
 msgstr ""
 
 #: movies/models.py:67
-msgid "certificate"
+msgid "genres"
+msgstr ""
+
+#: movies/models.py:68
+msgid "persons"
 msgstr ""
 
 #: movies/models.py:71
 msgid "file"
+msgstr ""
+
+#: movies/models.py:72
+msgid "certificate"
 msgstr ""
 
 #: movies/models.py:76
@@ -1277,12 +1292,24 @@ msgstr ""
 msgid "film works"
 msgstr ""
 
+#: movies/models.py:84 movies/models.py:98
+msgid "film_work"
+msgstr ""
+
+#: movies/models.py:85
+msgid "genre"
+msgstr ""
+
 #: movies/models.py:90
 msgid "Film genre"
 msgstr ""
 
 #: movies/models.py:91
 msgid "Films genre"
+msgstr ""
+
+#: movies/models.py:99
+msgid "person"
 msgstr ""
 
 #: movies/models.py:100

@@ -8,19 +8,14 @@ from django.utils.translation import gettext_lazy as _
 
 
 class TimeStampedMixin(models.Model):
-    # auto_now_add автоматически выставит дату создания записи.
     created = models.DateTimeField(auto_now_add=True)
-    # auto_now изменятся при каждом обновлении записи.
     modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        # Этот параметр указывает Django, что этот класс не является представлением таблицы
         abstract = True
 
 
 class UUIDMixin(models.Model):
-    # Типичная модель в Django использует число в качестве id. В таких ситуациях поле не описывается в модели.
-    # Вам же придётся явно объявить primary key.
     id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                           editable=False)
 
@@ -29,15 +24,11 @@ class UUIDMixin(models.Model):
 
 
 class Genre(UUIDMixin, TimeStampedMixin):
-    # Первым аргументом обычно идёт человекочитаемое название поля.
     name = models.CharField(_('title'), max_length=30)
-    # blank=True делает поле необязательным для заполнения.
     description = models.TextField(_('description'), blank=True)
 
     class Meta:
-        # Ваши таблицы находятся в нестандартной схеме. Это нужно указать в классе модели.
         db_table = "content\".\"genre"
-        # Следующие два поля отвечают за название модели в интерфейсе.
         verbose_name = _('Genre')
         verbose_name_plural = _('Genres')
 
@@ -66,13 +57,15 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
                             choices=[('movie', _('type movie')), ('tv_show', _('type TV show'))])
     genres = models.ManyToManyField(Genre, through='GenreFilmwork', verbose_name=_('Film genre'))
     persons = models.ManyToManyField(Person, through='PersonFilmwork', verbose_name=_('Person'))
-    # Параметр upload_to указывает, в какой подпапке будут храниться загружемые файлы.
-    # Базовая папка указана в файле настроек как MEDIA_ROOT
     file_path = models.FileField(_('file'), blank=True, null=True, upload_to='movies/')
     certificate = models.CharField(_('certificate'), max_length=512, blank=True)
 
     class Meta:
         db_table = "content\".\"film_work"
+        indexes = [
+            models.Index(fields=['type', 'creation_date']),
+            models.Index(fields=['creation_date', 'rating'])
+        ]
         verbose_name = _('film work')
         verbose_name_plural = _('film works')
 
@@ -87,6 +80,7 @@ class GenreFilmwork(UUIDMixin):
 
     class Meta:
         db_table = "content\".\"genre_film_work"
+        indexes = [models.Index(fields=['film_work', 'genre'])]
         verbose_name = _('Film genre')
         verbose_name_plural = _('Films genre')
 
@@ -95,13 +89,20 @@ class GenreFilmwork(UUIDMixin):
 
 
 class PersonFilmwork(UUIDMixin):
+
+    class Role(models.TextChoices):
+        actor = _('actor')
+        director = _('director')
+        writer = _('writer')
+
     film_work = models.ForeignKey(Filmwork, on_delete=models.CASCADE, verbose_name=_('film work'))
     person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name=_('Person'))
-    role = models.CharField(_('role'), max_length=50, null=True)
+    role = models.CharField(_('role'), choices=Role.choices , max_length=50, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "content\".\"person_film_work"
+        constraints = [models.UniqueConstraint(fields=['film_work', 'person', 'role'], name="film_work_person_idx")]
         verbose_name = _('Person filmwork')
         verbose_name_plural = _('Persons filmwork')
 

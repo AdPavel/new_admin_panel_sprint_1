@@ -89,15 +89,16 @@ class GenreFilmwork(UUIDMixin):
 
 
 class PersonFilmwork(UUIDMixin):
+    role_list = [
+        ('actor', _('actor')),
+        ('director', _('director')),
+        ('writer', _('writer'))
+    ]
 
-    class Role(models.TextChoices):
-        actor = _('actor')
-        director = _('director')
-        writer = _('writer')
 
     film_work = models.ForeignKey(Filmwork, on_delete=models.CASCADE, verbose_name=_('film work'))
     person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name=_('Person'))
-    role = models.CharField(_('role'), choices=Role.choices , max_length=50, null=True)
+    role = models.CharField(_('role'), choices=role_list, max_length=50, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

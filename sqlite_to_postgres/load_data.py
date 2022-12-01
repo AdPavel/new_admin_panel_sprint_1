@@ -16,7 +16,7 @@ def conn_context_sqlite(db_path: str):
         conn.row_factory = sqlite3.Row
         yield conn
     except sqlite3.Error as msg:
-        print('Ошибка SQLlite: ', msg)
+        print('Ошибка SQLite: ', msg)
     finally:
         if conn:
             conn.close()
@@ -28,11 +28,10 @@ def conn_context_pg(dsl):
         pg_conn = psycopg2.connect(**dsl, cursor_factory=DictCursor)
         yield pg_conn
     except psycopg2.Error as msg:
-        print('Ошибка PostGres: ', msg)
+        print('Ошибка Postgres: ', msg)
     finally:
         if pg_conn:
             pg_conn.close()
-
 
 
 def load_from_sqlite(connection: sqlite3.Connection, pg_conn: _connection):
@@ -40,8 +39,7 @@ def load_from_sqlite(connection: sqlite3.Connection, pg_conn: _connection):
     postgres_saver = PostgresSaver(pg_conn)
     sqlite_extractor = SQLiteExtractor(connection)
 
-    data = sqlite_extractor.extract_movies()
-    postgres_saver.save_all_data(data)
+    sqlite_extractor.extract_movies(postgres_saver)
 
 
 if __name__ == '__main__':

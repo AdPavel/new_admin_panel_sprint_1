@@ -49,6 +49,8 @@ class FilmWork:
 
 
 def save_to_genre(table_chunk):
+    """Формируем запрос и выстраиваем в нужной
+     последовательности поля для встаки в Postgres"""
     sql_query = """
         INSERT INTO content.genre(id, name, description, created, modified)
         VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING
@@ -59,6 +61,8 @@ def save_to_genre(table_chunk):
 
 
 def save_to_genre_film_work(table_chunk):
+    """Формируем запрос и выстраиваем в нужной
+     последовательности поля для встаки в Postgres"""
     sql_query = """
         INSERT INTO content.genre_film_work(id, genre_id,
                                             film_work_id, created)
@@ -70,6 +74,8 @@ def save_to_genre_film_work(table_chunk):
 
 
 def save_to_person_film_work(table_chunk):
+    """Формируем запрос и выстраиваем в нужной
+     последовательности поля для встаки в Postgres"""
     sql_query = """
         INSERT INTO content.person_film_work(id, person_id, film_work_id,
                                             role, created)
@@ -81,6 +87,8 @@ def save_to_person_film_work(table_chunk):
 
 
 def save_to_person(table_chunk):
+    """Формируем запрос и выстраиваем в нужной
+     последовательности поля для встаки в Postgres"""
     sql_query = """
         INSERT INTO content.person(id, full_name, created, modified)
         VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING
@@ -91,6 +99,8 @@ def save_to_person(table_chunk):
 
 
 def save_to_film_work(table_chunk):
+    """Формируем запрос и выстраиваем в нужной
+     последовательности поля для встаки в Postgres"""
     sql_query = """
         INSERT INTO content.film_work (id, title, description, creation_date,
          rating, type, created, modified, file_path)
@@ -115,33 +125,36 @@ class PostgresSaver:
     def __init__(self, pg_conn):
         self.pg_conn = pg_conn
 
-    def save_all_data(self, data):
+    def save_all_data(self, data, key):
         curs = self.pg_conn.cursor()
-        tables = ('film_work', 'person', 'genre',
-                  'genre_film_work', 'person_film_work')
-        for table_name in tables:
-            start = 0
-            chunk = n = int(len(data[table_name]) * 0.1) + 1
-            while table_chunk := data[table_name][start:chunk]:
-                sql_query, chunk_data = self.func_dict[table_name](table_chunk)
-                curs.executemany(sql_query, chunk_data)
-                self.pg_conn.commit()
-                start, chunk = chunk, chunk + n
+        sql_query, chunk_data = self.func_dict[key](data)
+        curs.executemany(sql_query, chunk_data)
+        self.pg_conn.commit()
+        curs.close()
 
 
 class SQLiteExtractor:
     def __init__(self, conn):
         self.conn = conn
 
-    def extract_movies(self):
-        dataclass_dict = {'genre': Genre,
-                          'genre_film_work': GenreFilmWork,
-                          'person_film_work': PersonFilmWork,
-                          'person': Person,
-                          'film_work': FilmWork}
-        data = dict()
-        curs = self.conn.cursor()
+    def extract_movies(self, postgres_saver: object):
+        dataclass_dict = {
+            'film_work': FilmWork,
+            'person': Person,
+            'genre': Genre,
+            'genre_film_work': GenreFilmWork,
+            'person_film_work': PersonFilmWork
+        }
+
         for key in dataclass_dict:
+            data = dict()
+            curs = self.conn.cursor()
             curs.execute(f"""SELECT * FROM {key};""")
-            data[key] = [dataclass_dict[key](**row) for row in curs.fetchall()]
-        return data
+            while True:
+                records = curs.fetchmany(size=1000)
+                if not records:
+                    break
+                data = [dataclass_dict[key](**row) for row in records]
+                postgres_saver.save_all_data(data, key)
+            curs.close()
+        self.conn.close()

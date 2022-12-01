@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-30 10:31+0000\n"
+"POT-Creation-Date: 2022-12-01 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1220,106 +1220,106 @@ msgstr ""
 msgid "MOVIE"
 msgstr ""
 
-#: movies/models.py:33 movies/models.py:61
+#: movies/models.py:27 movies/models.py:52
 msgid "title"
 msgstr ""
 
-#: movies/models.py:35 movies/models.py:62
+#: movies/models.py:28 movies/models.py:53
 msgid "description"
 msgstr ""
 
-#: movies/models.py:41
+#: movies/models.py:32
 msgid "Genre"
 msgstr ""
 
-#: movies/models.py:42
+#: movies/models.py:33
 msgid "Genres"
 msgstr ""
 
-#: movies/models.py:49
+#: movies/models.py:40
 msgid "Full name"
 msgstr ""
 
-#: movies/models.py:53
+#: movies/models.py:44 movies/models.py:59 movies/models.py:99
 msgid "Person"
 msgstr ""
 
-#: movies/models.py:54
+#: movies/models.py:45
 msgid "Persons"
 msgstr ""
 
-#: movies/models.py:63
+#: movies/models.py:54
 msgid "create date"
 msgstr ""
 
-#: movies/models.py:64
+#: movies/models.py:55
 msgid "rating"
 msgstr ""
 
-#: movies/models.py:65
+#: movies/models.py:56
 msgid "type"
 msgstr ""
 
-#: movies/models.py:66
+#: movies/models.py:57
 msgid "type movie"
 msgstr ""
 
-#: movies/models.py:66
+#: movies/models.py:57
 msgid "type TV show"
 msgstr ""
 
-#: movies/models.py:67
-msgid "genres"
-msgstr ""
-
-#: movies/models.py:68
-msgid "persons"
-msgstr ""
-
-#: movies/models.py:71
-msgid "file"
-msgstr ""
-
-#: movies/models.py:72
-msgid "certificate"
-msgstr ""
-
-#: movies/models.py:76
-msgid "film work"
-msgstr ""
-
-#: movies/models.py:77
-msgid "film works"
-msgstr ""
-
-#: movies/models.py:84 movies/models.py:98
-msgid "film_work"
-msgstr ""
-
-#: movies/models.py:85
-msgid "genre"
-msgstr ""
-
-#: movies/models.py:90
+#: movies/models.py:58 movies/models.py:84
 msgid "Film genre"
 msgstr ""
 
-#: movies/models.py:91
+#: movies/models.py:60
+msgid "file"
+msgstr ""
+
+#: movies/models.py:61
+msgid "certificate"
+msgstr ""
+
+#: movies/models.py:69 movies/models.py:98
+msgid "film work"
+msgstr ""
+
+#: movies/models.py:70
+msgid "film works"
+msgstr ""
+
+#: movies/models.py:77
+msgid "film_work"
+msgstr ""
+
+#: movies/models.py:78
+msgid "genre"
+msgstr ""
+
+#: movies/models.py:85
 msgid "Films genre"
 msgstr ""
 
-#: movies/models.py:99
-msgid "person"
+#: movies/models.py:94
+msgid "actor"
+msgstr ""
+
+#: movies/models.py:95
+msgid "director"
+msgstr ""
+
+#: movies/models.py:96
+msgid "writer"
 msgstr ""
 
 #: movies/models.py:100
 msgid "role"
 msgstr ""
 
-#: movies/models.py:105
+#: movies/models.py:106
 msgid "Person filmwork"
 msgstr ""
 
-#: movies/models.py:106
+#: movies/models.py:107
 msgid "Persons filmwork"
 msgstr ""

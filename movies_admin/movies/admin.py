@@ -17,7 +17,7 @@ class PersonFilmworkInline(admin.TabularInline):
 
 @admin.register(PersonFilmwork)
 class PersonFilmworkAdmin(admin.ModelAdmin):
-    list_display = ('film_work', 'person', 'get_actor')
+    list_display = ('film_work', 'person', 'role')
     list_filter = ('role', ('person', RelatedDropdownFilter))
 
 

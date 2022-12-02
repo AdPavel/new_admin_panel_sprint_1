@@ -7,6 +7,7 @@ from psycopg2.extras import DictCursor
 
 from config import settings
 from extractor_saver import SQLiteExtractor, PostgresSaver
+from log_settings import log
 
 
 @contextmanager
@@ -16,7 +17,7 @@ def conn_context_sqlite(db_path: str):
         conn.row_factory = sqlite3.Row
         yield conn
     except sqlite3.Error as msg:
-        print('Ошибка SQLite: ', msg)
+        log.error(f'Ошибка SQLite: {msg}')
     finally:
         if conn:
             conn.close()
@@ -28,7 +29,7 @@ def conn_context_pg(dsl):
         pg_conn = psycopg2.connect(**dsl, cursor_factory=DictCursor)
         yield pg_conn
     except psycopg2.Error as msg:
-        print('Ошибка Postgres: ', msg)
+        log.error(f'Ошибка Postgres: {msg}')
     finally:
         if pg_conn:
             pg_conn.close()

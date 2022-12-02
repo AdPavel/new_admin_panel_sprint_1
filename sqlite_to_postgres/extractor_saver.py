@@ -150,10 +150,7 @@ class SQLiteExtractor:
             data = dict()
             curs = self.conn.cursor()
             curs.execute(f"""SELECT * FROM {key};""")
-            while True:
-                records = curs.fetchmany(size=1000)
-                if not records:
-                    break
+            while records := curs.fetchmany(size=1000):
                 data = [dataclass_dict[key](**row) for row in records]
                 postgres_saver.save_all_data(data, key)
             curs.close()
